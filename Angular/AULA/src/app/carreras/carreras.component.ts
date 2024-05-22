@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Carrera } from '../carrera';
+import { CARRERAS } from '../mock-carreras';
+import { NgFor} from '@angular/common';
 
 @Component({
   selector: 'app-carreras',
@@ -7,11 +9,9 @@ import { Carrera } from '../carrera';
   styleUrl: './carreras.component.css'
 })
 export class CarrerasComponent {
-  carrera: Carrera = {
-    id: 1,
-  nombre: 'Psicología',
-  rama: 'Ciencias de la salud',
-  duracion: '4 años',
-  precio: '6120€',
-  };
+  carreras = CARRERAS;
+  selectedCarrera?: Carrera;
+onSelect(carrera: Carrera): void {
+  this.selectedCarrera = carrera;
+}
 }
