@@ -5,11 +5,13 @@ import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CarrerasComponent } from './carreras/carreras.component';
+import { CarreraDetailComponent } from './carrera-detail/carrera-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CarrerasComponent
+    CarrerasComponent,
+    CarreraDetailComponent
   ],
   imports: [
     BrowserModule,

@@ -7,15 +7,4 @@
   </li>
 </ul>
 
-<div *ngIf="selectedCarrera">
-  <h2>{{selectedCarrera.nombre | uppercase}}</h2>
-  <div>id: {{selectedCarrera.id}}</div>
-  <div>
-    <label for="hero-name">Nombre: </label>
-    <input id="hero-name" [(ngModel)]="selectedCarrera.nombre" placeholder="name">
-  </div>
-  <div>Rama: {{selectedCarrera.rama}}</div>
-  <div>Duracion: {{selectedCarrera.duracion}}</div>
-  <div>Precio: {{selectedCarrera.precio}}</div>
-</div>
-
+<app-carrera-detail [carrera]="selectedCarrera"></app-carrera-detail>
