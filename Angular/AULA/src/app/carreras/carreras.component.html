@@ -1,7 +1,7 @@
 <h2>CARRERAS/MÁSTERS</h2>
 <ul class="heroes">
   <li *ngFor="let carrera of carreras">
-    <button type="button" (click)="onSelect(carrera)">
+    <button [class.selected]="carrera === selectedCarrera" type="button" (click)="onSelect(carrera)">
       <span class="name">{{carrera.nombre}}</span>
     </button>
   </li>
