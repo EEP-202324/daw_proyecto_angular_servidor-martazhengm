@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CarreraDetailComponent } from './carrera-detail/carrera-detail.component';
 import { CarrerasComponent } from './carreras/carreras.component';
+import { CarreraSearchComponent } from './carrera-search/carrera-search.component';
 import { MessagesComponent } from './messages/messages.component';
 
 @NgModule({
@@ -29,7 +30,8 @@ import { MessagesComponent } from './messages/messages.component';
     DashboardComponent,
     CarrerasComponent,
     CarreraDetailComponent,
-    MessagesComponent
+    MessagesComponent,
+    CarreraSearchComponent
   ],
   bootstrap: [ AppComponent ]
 })

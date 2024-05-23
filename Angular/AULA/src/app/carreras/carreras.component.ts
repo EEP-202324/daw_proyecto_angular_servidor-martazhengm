@@ -21,10 +21,10 @@ export class CarrerasComponent implements OnInit {
       .subscribe(carreras => this.carreras = carreras);
   }
 
-  add(name: string): void {
-    name = name.trim();
-    if (!name) { return; }
-    this.carreraService.addCarrera({ name } as Carrera)
+  add(nombre: string): void {
+    nombre = nombre.trim();
+    if (!nombre) { return; }
+    this.carreraService.addCarrera({ nombre } as Carrera)
       .subscribe(carrera => {
         this.carreras.push(carrera);
       });
