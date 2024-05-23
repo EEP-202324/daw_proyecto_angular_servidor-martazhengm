@@ -20,4 +20,18 @@ export class CarrerasComponent implements OnInit {
     this.carreraService.getCarreras()
       .subscribe(carreras => this.carreras = carreras);
   }
+
+  add(name: string): void {
+    name = name.trim();
+    if (!name) { return; }
+    this.carreraService.addCarrera({ name } as Carrera)
+      .subscribe(carrera => {
+        this.carreras.push(carrera);
+      });
+  }
+
+  delete(carrera: Carrera): void {
+  this.carreras = this.carreras.filter(h => h !== carrera);
+  this.carreraService.deleteCarrera(carrera.id).subscribe();
+}
 }

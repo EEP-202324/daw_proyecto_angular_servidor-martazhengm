@@ -32,4 +32,11 @@ export class CarreraDetailComponent implements OnInit {
   goBack(): void {
     this.location.back();
   }
+
+  save(): void {
+  if (this.carrera) {
+    this.carreraService.updateCarrera(this.carrera)
+      .subscribe(() => this.goBack());
+  }
+}
 }
