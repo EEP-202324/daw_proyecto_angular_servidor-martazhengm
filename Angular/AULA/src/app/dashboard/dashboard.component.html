@@ -1,0 +1,7 @@
+<h2>Top Carreras</h2>
+<div class="carreras-menu">
+  <a *ngFor="let carrera of carreras" [routerLink]="['/detail', carrera.id]">
+    {{carrera.nombre}}
+  </a>
+</div>
+

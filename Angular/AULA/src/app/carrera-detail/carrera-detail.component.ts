@@ -1,10 +1,14 @@
-import {Component, Input} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+
 import { Carrera } from '../carrera';
+import { CarreraService } from '../carrera.service';
 
 @Component({
   selector: 'app-carrera-detail',
   templateUrl: './carrera-detail.component.html',
-  styleUrl: './carrera-detail.component.css'
+  styleUrls: [ './carrera-detail.component.css' ]
 })
 export class CarreraDetailComponent {
   @Input() carrera?: Carrera;

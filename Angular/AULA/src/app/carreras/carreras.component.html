@@ -1,10 +1,11 @@
 <h2>CARRERAS/MÁSTERS</h2>
-<ul class="heroes">
+<ul class="carreras">
   <li *ngFor="let carrera of carreras">
-    <button [class.selected]="carrera === selectedCarrera" type="button" (click)="onSelect(carrera)">
-      <span class="name">{{carrera.nombre}}</span>
-    </button>
+    <a routerLink="/detail/{{carrera.id}}">
+      <span class="badge">{{carrera.id}}</span> {{carrera.nombre}}
+    </a>
   </li>
 </ul>
 
-<app-carrera-detail [carrera]="selectedCarrera"></app-carrera-detail>
+
+
