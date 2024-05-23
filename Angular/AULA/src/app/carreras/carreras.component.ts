@@ -1,17 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
 import { Carrera } from '../carrera';
-import { CARRERAS } from '../mock-carreras';
-import { NgFor} from '@angular/common';
+import { CarreraService } from '../carrera.service';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-carreras',
   templateUrl: './carreras.component.html',
   styleUrl: './carreras.component.css'
 })
-export class CarrerasComponent {
-  carreras = CARRERAS;
+export class CarrerasComponent implements OnInit {
   selectedCarrera?: Carrera;
-onSelect(carrera: Carrera): void {
-  this.selectedCarrera = carrera;
-}
+  carreras: Carrera[] = [];
+  constructor(private carreraService: CarreraService, private messageService: MessageService) { }
+
+  ngOnInit(): void {
+  this.getCarreras();
+  }
+  onSelect(carrera: Carrera): void {
+    this.selectedCarrera = carrera;
+    this.messageService.add(`CarrerasComponent: Selected carrera id=${carrera.id}`);
+  }
+
+  getCarreras(): void {
+    this.carreraService.getCarreras()
+      .subscribe(carreras => this.carreras = carreras);
+  }
 }
