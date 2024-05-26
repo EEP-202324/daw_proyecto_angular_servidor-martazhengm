@@ -16,14 +16,14 @@ public class CarreraJsonTest {
 
     @Test
     void cashCardSerializationTest() throws IOException {
-        Carrera carrera = new Carrera(1L, "Psicologia", "Ciencias de la Salud", "4 años", "6120€");
+        Carrera carrera = new Carrera(1L, "Psicología", "Ciencias de la Salud", "4 años", "6120€");
         assertThat(json.write(carrera)).isStrictlyEqualToJson("expected.json");
         assertThat(json.write(carrera)).hasJsonPathNumberValue("@.id");
         assertThat(json.write(carrera)).extractingJsonPathNumberValue("@.id")
                 .isEqualTo(1);
         assertThat(json.write(carrera)).hasJsonPathStringValue("@.nombre");
         assertThat(json.write(carrera)).extractingJsonPathStringValue("@.nombre")
-             .isEqualTo("Psicologia");
+             .isEqualTo("Psicología");
         assertThat(json.write(carrera)).hasJsonPathStringValue("@.rama");
         assertThat(json.write(carrera)).extractingJsonPathStringValue("@.rama")
              .isEqualTo("Ciencias de la Salud");
@@ -40,16 +40,16 @@ public class CarreraJsonTest {
        String expected = """
        		{
 				"id":1,
-				"nombre": "Psicologia",
+				"nombre": "Psicología",
 				"rama": "Ciencias de la Salud",
 				"duracion": "4 años",
 				"precio": "6120€"
        		}
 				             """;
        assertThat(json.parse(expected))
-               .isEqualTo(new Carrera(1L, "Psicologia", "Ciencias de la Salud", "4 años", "6120€"));
+               .isEqualTo(new Carrera(1L, "Psicología", "Ciencias de la Salud", "4 años", "6120€"));
        assertThat(json.parseObject(expected).getId()).isEqualTo(1);
-       assertThat(json.parseObject(expected).getNombre()).isEqualTo("Psicologia");
+       assertThat(json.parseObject(expected).getNombre()).isEqualTo("Psicología");
        assertThat(json.parseObject(expected).getRama()).isEqualTo("Ciencias de la Salud");
        assertThat(json.parseObject(expected).getDuracion()).isEqualTo("4 años");
        assertThat(json.parseObject(expected).getPrecio()).isEqualTo("6120€");
