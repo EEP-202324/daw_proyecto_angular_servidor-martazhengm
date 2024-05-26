@@ -2,7 +2,15 @@ package com.example.carrera;
 
 import java.util.Objects;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
+@Entity
 public class Carrera {
+	
+	@Id
+	@GeneratedValue
 	private Long id;
 	private String nombre;
 	private String rama;

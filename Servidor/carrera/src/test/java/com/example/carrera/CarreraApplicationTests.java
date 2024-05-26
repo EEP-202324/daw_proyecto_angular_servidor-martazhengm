@@ -24,10 +24,19 @@ class CarreraApplicationTests {
         
         DocumentContext documentContext = JsonPath.parse(response.getBody());
         Number id = documentContext.read("$.id");
-        assertThat(id).isEqualTo(99);
+        assertThat(id).isEqualTo(1);
         
-        Double amount = documentContext.read("$.amount");
-        assertThat(amount).isEqualTo(123.45);
+        String nombre = documentContext.read("$.nombre");
+        assertThat(nombre).isEqualTo("Psicologia");
+        
+        String rama = documentContext.read("$.rama");
+        assertThat(rama).isEqualTo("Ciencias de la Salud");
+        
+        String duracion = documentContext.read("$.duracion");
+        assertThat(duracion).isEqualTo("4 años");
+        
+        String precio = documentContext.read("$.precio");
+        assertThat(precio).isEqualTo("6120€");
     }
     
     @Test
