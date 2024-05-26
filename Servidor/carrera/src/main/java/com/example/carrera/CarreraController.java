@@ -13,7 +13,7 @@ class CarreraController {
 	private ResponseEntity<Carrera> findById(
 			@PathVariable Long requestedId) {
 	if (requestedId.equals(99L)) {
-        Carrera carrera = new Carrera(99L, 123.45);
+        Carrera carrera = new Carrera(1L, "Psicologia", "Ciencias de la Salud", "4 años", "6120€");
         return ResponseEntity.ok(carrera);
     } else {
         return ResponseEntity.notFound().build();
