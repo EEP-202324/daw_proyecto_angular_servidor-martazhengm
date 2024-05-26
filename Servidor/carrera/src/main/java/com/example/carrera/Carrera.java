@@ -61,6 +61,12 @@ public class Carrera {
 	public void setPrecio(String precio) {
 		this.precio = precio;
 	}
+	
+		@Override
+	public String toString() {
+		return "Carrera [id=" + id + ", nombre=" + nombre + ", rama=" + rama + ", duracion=" + duracion + ", precio="
+				+ precio + "]";
+	}
 
 	@Override
 	public int hashCode() {
