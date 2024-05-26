@@ -1,4 +1,7 @@
 {
-	"id": 99,
- 	"amount": 123.45
+	"id": 1,
+ 	"nombre": 'Psicologia',
+ 	"rama": 'Ciencias de la Salud',
+ 	"duracion": '4 años',
+ 	"precio": '6120€' 	
 }

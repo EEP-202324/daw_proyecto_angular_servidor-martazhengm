@@ -16,28 +16,44 @@ public class CarreraJsonTest {
 
     @Test
     void cashCardSerializationTest() throws IOException {
-        Carrera carrera = new Carrera(99L, 123.45);
+        Carrera carrera = new Carrera(1L, "Psicologia", "Ciencias de la Salud", "4 años", "6120€");
         assertThat(json.write(carrera)).isStrictlyEqualToJson("expected.json");
         assertThat(json.write(carrera)).hasJsonPathNumberValue("@.id");
         assertThat(json.write(carrera)).extractingJsonPathNumberValue("@.id")
-                .isEqualTo(99);
-        assertThat(json.write(carrera)).hasJsonPathNumberValue("@.amount");
-        assertThat(json.write(carrera)).extractingJsonPathNumberValue("@.amount")
-             .isEqualTo(123.45);
+                .isEqualTo(1);
+        assertThat(json.write(carrera)).hasJsonPathStringValue("@.nombre");
+        assertThat(json.write(carrera)).extractingJsonPathStringValue("@.nombre")
+             .isEqualTo("Psicologia");
+        assertThat(json.write(carrera)).hasJsonPathStringValue("@.rama");
+        assertThat(json.write(carrera)).extractingJsonPathStringValue("@.rama")
+             .isEqualTo("Ciencias de la Salud");
+        assertThat(json.write(carrera)).hasJsonPathStringValue("@.duracion");
+        assertThat(json.write(carrera)).extractingJsonPathStringValue("@.duracion")
+             .isEqualTo("4 años");
+        assertThat(json.write(carrera)).hasJsonPathStringValue("@.precio");
+        assertThat(json.write(carrera)).extractingJsonPathStringValue("@.precio")
+             .isEqualTo("6120€");
     }
     
     @Test
     void carreraDeserializationTest() throws IOException {
        String expected = """
-               {
-                   "id":99,
-                   "amount":123.45
-               }
-               """;
+       		{
+				"id":1,
+				"nombre": "Psicologia",
+				"rama": "Ciencias de la Salud",
+				"duracion": "4 años",
+				"precio": "6120€"
+       		}
+				             """;
        assertThat(json.parse(expected))
-               .isEqualTo(new Carrera(999L, 123.45));
-       assertThat(json.parseObject(expected).id()).isEqualTo(1000);
-       assertThat(json.parseObject(expected).amount()).isEqualTo(67.89);
+               .isEqualTo(new Carrera(1L, "Psicologia", "Ciencias de la Salud", "4 años", "6120€"));
+       assertThat(json.parseObject(expected).getId()).isEqualTo(1);
+       assertThat(json.parseObject(expected).getNombre()).isEqualTo("Psicologia");
+       assertThat(json.parseObject(expected).getRama()).isEqualTo("Ciencias de la Salud");
+       assertThat(json.parseObject(expected).getDuracion()).isEqualTo("4 años");
+       assertThat(json.parseObject(expected).getPrecio()).isEqualTo("6120€");
+       
     }
 }
 	
