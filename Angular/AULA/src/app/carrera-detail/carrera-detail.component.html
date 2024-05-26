@@ -1,0 +1,13 @@
+<div *ngIf="carrera">
+  <h2>{{carrera.nombre | uppercase}} Details</h2>
+  <div><span>id: </span>{{carrera.id}}</div>
+  <div>
+    <label for="carrera-nombre">Nombre: </label>
+    <input id="carrera-nombre" [(ngModel)]="carrera.nombre" placeholder="nombre"/>
+  </div>
+  <div><span>Rama: </span>{{carrera.rama}}</div>
+  <div><span>Duración: </span>{{carrera.duracion}}</div>
+  <div><span>Precio: </span>{{carrera.precio}}</div>
+  <button type="button" (click)="goBack()">go back</button>
+  <button type="button" (click)="save()">save</button>
+</div>

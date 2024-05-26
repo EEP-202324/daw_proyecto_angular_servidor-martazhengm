@@ -1,0 +1,23 @@
+<h2>CARRERAS/MÁSTERS</h2>
+
+<div>
+  <label for="new-carrera">Nombre: </label>
+  <input id="new-carrera" #carreraName />
+
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button type="button" class="add-button" (click)="add(carreraName.value); carreraName.value=''">
+    Add hero
+  </button>
+</div>
+
+<ul class="carreras">
+  <li *ngFor="let carrera of carreras">
+    <a routerLink="/detail/{{carrera.id}}">
+      <span class="badge">{{carrera.id}}</span> {{carrera.nombre}}
+    </a>
+    <button type="button" class="delete" title="delete carrera" (click)="delete(carrera)">x</button>
+  </li>
+</ul>
+
+
+
