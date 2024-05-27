@@ -29,7 +29,7 @@ class CarreraJsonTest {
 				new Carrera(4L, "Derecho + ADE", "6 años", "Ciencias Sociales y Jurídicas", "7038€"),
 				new Carrera(5L, "Máster en Acceso al Ejercicio de la Abogacía y la Procura", "18 meses",
 						"Ciencias Sociales y Jurídicas", "7000€"),
-				new Carrera(6l, "Máster Oficial en Psicología General Sanitaria", "2 años", "Ciencias de la Salud",
+				new Carrera(6L, "Máster Oficial en Psicología General Sanitaria", "2 años", "Ciencias de la Salud",
 						"8969€"));
 	}
 
