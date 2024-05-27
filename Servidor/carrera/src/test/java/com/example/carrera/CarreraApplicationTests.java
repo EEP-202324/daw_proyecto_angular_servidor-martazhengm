@@ -13,6 +13,8 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
@@ -153,6 +155,40 @@ class CarreraApplicationTests {
 		assertThat(nombres).containsExactly("ADE", "Derecho", "Derecho + ADE",
 				"Máster acceso al Ejercicio de la Abogacía y la Procura",
 				"Máster Oficial en Psicología General Sanitaria", "Psicología");
-
+	}
+	
+	@Test
+	@DirtiesContext
+	void shouldUpdateAnExistingCarrera() {
+	    Carrera carreraUpdate = new Carrera(1L, "Psicología", "Ciencias de la Salud", "4 años", "6120€");
+	    HttpEntity<Carrera> request = new HttpEntity<>(carreraUpdate);
+	    ResponseEntity<Void> response = restTemplate
+	            .exchange("/carreras/1", HttpMethod.PUT, request, Void.class);
+	    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+	    
+	    ResponseEntity<String> getResponse = restTemplate
+	            .getForEntity("/carreras/1", String.class);
+	    assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+	    DocumentContext documentContext = JsonPath.parse(getResponse.getBody());
+	    Number id = documentContext.read("$.id");
+	    String nombre = documentContext.read("$.nombre");
+	    String rama = documentContext.read("$.rama");
+	    String duracion = documentContext.read("$.duracion");
+	    String precio = documentContext.read("$.precio");
+	    
+	    assertThat(id).isEqualTo(1);
+	    assertThat(nombre).isEqualTo("Psicología");
+	    assertThat(rama).isEqualTo("Ciencias de la Salud");
+	    assertThat(duracion).isEqualTo("4 años");
+	    assertThat(precio).isEqualTo("6120€");
+	}
+	
+	@Test
+	void shouldNotUpdateACashCardThatDoesNotExist() {
+	    Carrera unknownCard = new Carrera(null, "Magisterio", null, null, null);
+	    HttpEntity<Carrera> request = new HttpEntity<>(unknownCard);
+	    ResponseEntity<Void> response = restTemplate
+	            .exchange("/carreras/99999", HttpMethod.PUT, request, Void.class);
+	    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
 }
