@@ -87,26 +87,24 @@ class CarreraApplicationTests {
 
 		DocumentContext documentContext = JsonPath.parse(response.getBody());
 		int cashCardCount = documentContext.read("$.length()");
-		assertThat(cashCardCount).isEqualTo(6);
+		assertThat(cashCardCount).isEqualTo(5);
 
 		JSONArray ids = documentContext.read("$..id");
-		assertThat(ids).containsExactlyInAnyOrder(1, 2, 3, 4, 5, 6);
+		assertThat(ids).containsExactlyInAnyOrder(1, 2, 3, 4, 5);
 
 		JSONArray nombres = documentContext.read("$..nombre");
 		assertThat(nombres).containsExactlyInAnyOrder("Psicología", "ADE", "Derecho", "Derecho + ADE",
-				"Máster acceso al Ejercicio de la Abogacía y la Procura",
-				"Máster Oficial en Psicología General Sanitaria");
+				"Máster acceso al Ejercicio de la Abogacía y la Procura");
 
 		JSONArray ramas = documentContext.read("$..rama");
 		assertThat(ramas).containsExactlyInAnyOrder("Ciencias de la Salud", "Ciencias Sociales y Jurídicas",
-				"Ciencias Sociales y Jurídicas", "Ciencias Sociales y Jurídicas", "Ciencias Sociales y Jurídicas",
-				"Ciencias de la Salud");
+				"Ciencias Sociales y Jurídicas", "Ciencias Sociales y Jurídicas", "Ciencias Sociales y Jurídicas");
 
 		JSONArray duraciones = documentContext.read("$..duracion");
-		assertThat(duraciones).containsExactlyInAnyOrder("4 años", "4 años", "4 años", "6 años", "18 meses", "2 años");
+		assertThat(duraciones).containsExactlyInAnyOrder("4 años", "4 años", "4 años", "6 años", "18 meses");
 
 		JSONArray precios = documentContext.read("$..precio");
-		assertThat(precios).containsExactlyInAnyOrder("6120€", "6120€", "6120€", "7038€", "7000€", "8969€");
+		assertThat(precios).containsExactlyInAnyOrder("6120€", "6120€", "6120€", "7038€", "7000€");
 	}
 
 	@Test
@@ -149,12 +147,11 @@ class CarreraApplicationTests {
 
 		DocumentContext documentContext = JsonPath.parse(response.getBody());
 		JSONArray page = documentContext.read("$[*]");
-		assertThat(page.size()).isEqualTo(6);
+		assertThat(page.size()).isEqualTo(5);
 
 		JSONArray nombres = documentContext.read("$..nombre");
 		assertThat(nombres).containsExactly("ADE", "Derecho", "Derecho + ADE",
-				"Máster acceso al Ejercicio de la Abogacía y la Procura",
-				"Máster Oficial en Psicología General Sanitaria", "Psicología");
+				"Máster acceso al Ejercicio de la Abogacía y la Procura", "Psicología");
 	}
 	
 	@Test
@@ -190,5 +187,17 @@ class CarreraApplicationTests {
 	    ResponseEntity<Void> response = restTemplate
 	            .exchange("/carreras/99999", HttpMethod.PUT, request, Void.class);
 	    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+	}
+	
+	@Test
+	@DirtiesContext
+	void shouldDeleteAnExistingCarrera() {
+	    ResponseEntity<Void> response = restTemplate
+	            .exchange("/carreras/6", HttpMethod.DELETE, null, Void.class);
+	    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+	    
+	    ResponseEntity<String> getResponse = restTemplate
+	            .getForEntity("/carreras/6", String.class);
+	    assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
 }
