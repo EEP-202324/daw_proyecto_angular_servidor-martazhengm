@@ -9,7 +9,7 @@ import { MessageService } from './message.service';
 
 @Injectable({ providedIn: 'root' })
 export class CarreraService {
-  private carrerasUrl = 'api/carreras';  // URL to web api
+  private carrerasUrl = 'http://localhost:8080/carreras';  // URL to web api
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

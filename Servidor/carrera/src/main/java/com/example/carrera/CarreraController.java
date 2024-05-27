@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/carreras")
 class CarreraController {
@@ -58,23 +60,19 @@ class CarreraController {
 	}
 
 	@PutMapping("/{requestedId}")
-    public ResponseEntity<Void> putCarrera(@PathVariable Long requestedId, @RequestBody Carrera carreraActualizada) {
-        Optional<Carrera> optional = carreraRepository.findById(requestedId);
-        if (optional.isPresent()) {
-            Carrera carrera = optional.get();
-            Carrera updateCarrera = new Carrera (
-                    carrera.getId(),
-                    carreraActualizada.getNombre(),
-                    carreraActualizada.getRama(),
-                    carreraActualizada.getDuracion(),
-                    carreraActualizada.getPrecio());
-        carreraRepository.save(updateCarrera);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-	
+	public ResponseEntity<Void> putCarrera(@PathVariable Long requestedId, @RequestBody Carrera carreraActualizada) {
+		Optional<Carrera> optional = carreraRepository.findById(requestedId);
+		if (optional.isPresent()) {
+			Carrera carrera = optional.get();
+			Carrera updateCarrera = new Carrera(carrera.getId(), carreraActualizada.getNombre(),
+					carreraActualizada.getRama(), carreraActualizada.getDuracion(), carreraActualizada.getPrecio());
+			carreraRepository.save(updateCarrera);
+			return ResponseEntity.noContent().build();
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
 	@DeleteMapping("/{id}")
 	private ResponseEntity<Void> deleteCarrera(@PathVariable Long id) {
 		carreraRepository.deleteById(id);
