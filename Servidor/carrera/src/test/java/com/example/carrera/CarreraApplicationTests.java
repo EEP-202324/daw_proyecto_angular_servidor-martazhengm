@@ -54,7 +54,7 @@ class CarreraApplicationTests {
 	}
 
 	@Test
-	//@DirtiesContext
+	@DirtiesContext
 	void shouldCreateNewCarrera() {
 		Carrera newCarrera = new Carrera(2L, "ADE", "Ciencias Sociales y Jurídicas", "4 años", "6120€");
 		ResponseEntity<Void> createResponse = restTemplate.postForEntity("/carreras", newCarrera, Void.class);
@@ -76,5 +76,83 @@ class CarreraApplicationTests {
 		assertThat(rama).isEqualTo("Ciencias Sociales y Jurídicas");
 		assertThat(duracion).isEqualTo("4 años");
 		assertThat(precio).isEqualTo("6120€");
+	}
+
+	@Test
+	void shouldReturnAllCarrerasWhenListIsRequested() {
+		ResponseEntity<String> response = restTemplate.getForEntity("/carreras", String.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+		DocumentContext documentContext = JsonPath.parse(response.getBody());
+		int cashCardCount = documentContext.read("$.length()");
+		assertThat(cashCardCount).isEqualTo(6);
+
+		JSONArray ids = documentContext.read("$..id");
+		assertThat(ids).containsExactlyInAnyOrder(1, 2, 3, 4, 5, 6);
+
+		JSONArray nombres = documentContext.read("$..nombre");
+		assertThat(nombres).containsExactlyInAnyOrder("Psicología", "ADE", "Derecho", "Derecho + ADE",
+				"Máster acceso al Ejercicio de la Abogacía y la Procura",
+				"Máster Oficial en Psicología General Sanitaria");
+
+		JSONArray ramas = documentContext.read("$..rama");
+		assertThat(ramas).containsExactlyInAnyOrder("Ciencias de la Salud", "Ciencias Sociales y Jurídicas",
+				"Ciencias Sociales y Jurídicas", "Ciencias Sociales y Jurídicas", "Ciencias Sociales y Jurídicas",
+				"Ciencias de la Salud");
+
+		JSONArray duraciones = documentContext.read("$..duracion");
+		assertThat(duraciones).containsExactlyInAnyOrder("4 años", "4 años", "4 años", "6 años", "18 meses", "2 años");
+
+		JSONArray precios = documentContext.read("$..precio");
+		assertThat(precios).containsExactlyInAnyOrder("6120€", "6120€", "6120€", "7038€", "7000€", "8969€");
+	}
+
+	@Test
+	void shouldReturnAPageOfCarreras() {
+		ResponseEntity<String> response = restTemplate.getForEntity("/carreras?page=0&size=1", String.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+		DocumentContext documentContext = JsonPath.parse(response.getBody());
+		JSONArray page = documentContext.read("$[*]");
+		assertThat(page.size()).isEqualTo(1);
+	}
+
+	@Test
+	void shouldReturnASortedPageOfCarrerass() {
+		ResponseEntity<String> response = restTemplate.getForEntity("/carreras?page=0&size=1&sort=nombre,desc",
+				String.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+		DocumentContext documentContext = JsonPath.parse(response.getBody());
+		JSONArray read = documentContext.read("$[*]");
+		assertThat(read.size()).isEqualTo(1);
+
+		String nombre = documentContext.read("$[0].nombre");
+		assertThat(nombre).isEqualTo("Psicología");
+
+		String rama = documentContext.read("$[0].rama");
+		assertThat(rama).isEqualTo("Ciencias de la Salud");
+
+		String duracion = documentContext.read("$[0].duracion");
+		assertThat(duracion).isEqualTo("4 años");
+
+		String precio = documentContext.read("$[0].precio");
+		assertThat(precio).isEqualTo("6120€");
+	}
+
+	@Test
+	void shouldReturnASortedPageOfCarrerasWithNoParametersAndUseDefaultValues() {
+		ResponseEntity<String> response = restTemplate.getForEntity("/carreras", String.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+		DocumentContext documentContext = JsonPath.parse(response.getBody());
+		JSONArray page = documentContext.read("$[*]");
+		assertThat(page.size()).isEqualTo(6);
+
+		JSONArray nombres = documentContext.read("$..nombre");
+		assertThat(nombres).containsExactly("ADE", "Derecho", "Derecho + ADE",
+				"Máster acceso al Ejercicio de la Abogacía y la Procura",
+				"Máster Oficial en Psicología General Sanitaria", "Psicología");
+
 	}
 }

@@ -36,7 +36,7 @@ class CarreraJsonTest {
 	@Test
 	void cashCardSerializationTest() throws IOException {
 		Carrera carrera = new Carrera(1L, "Psicología", "Ciencias de la Salud", "4 años", "6120€");
-		assertThat(json.write(carrera)).isStrictlyEqualToJson("expected.json");
+		assertThat(json.write(carrera)).isStrictlyEqualToJson("single.json");
 		assertThat(json.write(carrera)).hasJsonPathNumberValue("@.id");
 		assertThat(json.write(carrera)).extractingJsonPathNumberValue("@.id").isEqualTo(1);
 		assertThat(json.write(carrera)).hasJsonPathStringValue("@.nombre");
