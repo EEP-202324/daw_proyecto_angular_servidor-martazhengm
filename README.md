@@ -21,3 +21,5 @@ para manejar datos de alguna entidad relacionada con la feria Aula.
 ANOTACIONES
 Tras mucho intenetarlo el buscar carreras no funciona, otra de las funciones que no tiene una función tan buena como me gustaría es el añadir carreras ya que
 como el id es primary key no puedes remplazarla.
+LINK
+https://eepmad-my.sharepoint.com/:v:/g/personal/mzhen-garcia1_eep-igroup_com/ET3DTWkvv6xOudTVP5SdLckBMZc89IGPg7ioJcha7maurw?e=Xa7V4Y 
