@@ -87,11 +87,13 @@ export class CarreraService {
 
   /** PUT: update the carrera on the server */
   updateCarrera(carrera: Carrera): Observable<any> {
-    return this.http.put(this.carrerasUrl, carrera, this.httpOptions).pipe(
-      tap(_ => this.log(`updated carrera id=${carrera.id}`)),
-      catchError(this.handleError<any>('updateCarrera'))
-    );
-  }
+  const url = `${this.carrerasUrl}/${carrera.id}`; // URL específica para la carrera a actualizar
+  return this.http.put(url, carrera, this.httpOptions).pipe(
+    tap(_ => this.log(`updated carrera id=${carrera.id}`)),
+    catchError(this.handleError<any>('updateCarrera'))
+  );
+}
+
 
     /**
    * Handle Http operation that failed.
